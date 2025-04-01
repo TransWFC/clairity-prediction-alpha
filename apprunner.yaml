@@ -2,9 +2,10 @@ version: 1.0
 runtime: python3
 build:
   commands:
-    - "yum install -y gcc gcc-c++ make lapack-devel blas-devel"
-    - "pip install --no-cache-dir -r requirements.txt"
+    - pip install --no-cache-dir -r requirements.txt
+    - pip install gunicorn
+
 run:
-  command: "gunicorn -b 0.0.0.0:$PORT server:app"
+  command: gunicorn -w 4 -b 0.0.0.0:$PORT server:app
   network:
     port: 8080
