@@ -10,5 +10,5 @@ build:
 run:
   command: python -m gunicorn application:app
   network:
-    port: 8080
+    port: 8000
     env: APP_PORT
