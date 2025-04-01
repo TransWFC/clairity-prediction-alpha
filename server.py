@@ -162,4 +162,4 @@ def get_air_quality():
     return jsonify(city_data)
 
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    app.run()
