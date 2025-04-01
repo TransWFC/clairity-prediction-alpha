@@ -7,11 +7,13 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 import pandas as pd
 from flask_cors import CORS
+import os
 
-app = Flask(__name__)
+application = Flask(__name__)
+app = application  # For compatibility with both gunicorn and direct Flask running
 CORS(app)
 
-# Configuración
+# Configuration
 token = 'b38f9f302033008623310932a8ca0d6329fe9567'
 cities = {
     "mexico": {"code": "mexico", "name": "Ciudad de México"},
@@ -161,5 +163,25 @@ def get_air_quality():
     
     return jsonify(city_data)
 
+# Add a health check endpoint that App Runner can use
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"})
+
+# Add a root endpoint
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({
+        "service": "Air Quality API",
+        "endpoints": {
+            "/api/calidad-aire": "Get air quality data for all cities",
+            "/health": "Health check endpoint"
+        }
+    })
+
+# This is the entry point for App Runner
 if __name__ == '__main__':
-    app.run()
+    # Get port from environment variable or default to 8080
+    port = int(os.environ.get('PORT', 8080))
+    # Use 0.0.0.0 to make the server publicly available
+    app.run(host='0.0.0.0', port=port)
