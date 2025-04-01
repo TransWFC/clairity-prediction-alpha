@@ -1,11 +1,11 @@
 version: 1.0
 runtime: python3
 build:
-   commands:
-      - echo "Building the application..."
-      - pip install -r requirements.txt
-      - echo "Build completed."
+  commands:
+    - echo "Building the application..."
+    - pip install -r requirements.txt
+    - echo "Build completed."
 run:
-    command: gunicorn application:app
+  command: gunicorn application:app
 network:
-   port: 8080
+  port: 8080
