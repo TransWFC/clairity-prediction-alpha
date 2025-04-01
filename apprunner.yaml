@@ -3,9 +3,10 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.13
+      python: 3.10
     commands:
       - pip install -r requirements.txt
+      - pip install gunicorn  # Make sure gunicorn is installed
 
   build:
     commands:
@@ -14,6 +15,7 @@ phases:
   post_build:
     commands:
       - echo "Deploying app..."
+      - gunicorn -w 4 server:app  # Replace 'app' with the correct name of your Flask/FastAPI app instance
 
 artifacts:
   files:
