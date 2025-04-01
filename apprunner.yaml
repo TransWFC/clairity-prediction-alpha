@@ -1,0 +1,10 @@
+version: 1.0
+runtime: python3
+build:
+  commands:
+    - yum install -y gcc gcc-c++ make lapack-devel blas-devel  # Install system dependencies
+    - pip install --no-cache-dir -r requirements.txt  # Install Python dependencies
+run:
+  command: gunicorn -b 0.0.0.0:$PORT server:app  # Ensure App Runner binds to the correct port
+  network:
+    port: 8080  # AWS App Runner default port
