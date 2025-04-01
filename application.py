@@ -9,7 +9,7 @@ import pandas as pd
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}) 
 
 # Configuración
 token = 'b38f9f302033008623310932a8ca0d6329fe9567'
