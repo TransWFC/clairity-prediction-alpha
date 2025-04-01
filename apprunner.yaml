@@ -1,23 +1,11 @@
-version: 0.2
-
-phases:
-  install:
-    runtime-versions:
-      python: 3.11
-    commands:
-      - pip install --no-cache-dir
+version: 1.0
+runtime: python3
+build:
+   commands:
+      - echo "Building the application..."
       - pip install -r requirements.txt
-      - pip install gunicorn  
-
-  build:
-    commands:
-      - echo "Build phase complete!"
-
-  post_build:
-    commands:
-      - echo "Deploying app..."
-      - gunicorn -w 4 application:app  
-
-artifacts:
-  files:
-    - application.py
+      - echo "Build completed."
+run:
+    command: gunicorn application:app
+network:
+   port: 8080
